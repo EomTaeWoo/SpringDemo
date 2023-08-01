@@ -1,15 +1,18 @@
 package hello.demo.order;
 
+import hello.demo.annotation.MainDiscountPolicy;
 import hello.demo.discount.DiscountPolicy;
 import hello.demo.discount.FIxDiscountPolicy;
 import hello.demo.discount.RateDiscountPolicy;
 import hello.demo.member.Member;
 import hello.demo.member.MemberRepository;
 import hello.demo.member.MemoryMemberRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component
+//@RequiredArgsConstructor    // lombok이 생성자를 만들어준다
 public class OrderServiceImpl implements OrderService{
 
     //private final MemberRepository memberRepository = new MemoryMemberRepository();
@@ -20,8 +23,8 @@ public class OrderServiceImpl implements OrderService{
     private final DiscountPolicy discountPolicy;
     private final MemberRepository memberRepository;
 
-    @Autowired
-    public OrderServiceImpl(MemberRepository memberRepository, DiscountPolicy discountPolicy) {
+    @Autowired // 생성자 하나이면 Autowired생략가능
+    public OrderServiceImpl(MemberRepository memberRepository, @MainDiscountPolicy DiscountPolicy discountPolicy) {
         this.discountPolicy = discountPolicy;
         this.memberRepository = memberRepository;
     }
